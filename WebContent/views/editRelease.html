@@ -1,0 +1,70 @@
+<div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Release</h4>
+              </div>
+              <div class="modal-body">
+                <form name = "updateReleaseForm">
+    				<label>Release Name:</label>
+    				<input type="text" class="form-control" name="name" ng-model="release.name" required/>
+    				<p ng-show="updateReleaseForm.name.$invalid && !updateReleaseForm.name.$pristine" class="help-block">Release name is required.</p>
+    				
+    				<br>
+    				<label>Product Name:</label>
+   					 <input type="text" name="productName" class="form-control" ng-model="release.productName" required/><br>
+   					 <p ng-show="updateReleaseForm.productName.$invalid && !updateReleaseForm.productName.$pristine" class="help-block">Product Name is required.</p>
+					<label> Status:</label>
+   					 <select ng-model="release.status" class="form-control">
+						<option value="STARTED">STARTED</option>
+      					<option value="NOT_STARTED">NOT STARTED</option>
+
+					</select><br>
+					<label>Owner:</label>
+   					 <input type="text" name="owner" class="form-control" ng-model="release.owner" required/><br>
+					<p ng-show="updateReleaseForm.owner.$invalid && !updateReleaseForm.owner.$pristine" class="help-block">owner is required.</p>
+					<label>Start Date:</label>
+					 <div class="row">
+      					<div class="col-md-6">
+       						 <p class="input-group">
+          						<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="release.startDate" is-open="popup1.opened"  ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          						<span class="input-group-btn">
+            						<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          						</span>
+        						</p>
+						</div>
+      				</div><br>
+
+					<label>End Date:</label>
+					  <div class="row">
+      					<div class="col-md-6">
+       						 <p class="input-group">
+          						<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="release.endDate" is-open="popup2.opened"  ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          						<span class="input-group-btn">
+            						<button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          						</span>
+        						</p>
+						</div>
+      				</div><br>
+					
+					<label>Mnode Available ?:</label>
+    				<select ng-model="release.mnodeAvailable" class="form-control">
+						<option value="YES">YES</option>
+      					<option value="NO">NO</option>
+						<option value="YES">PARTIAL</option>
+					</select><br>
+    				<label>Comments:</label>
+   					 <input type="textarea" ng-model="release.comments" class="form-control"/><br>
+	
+					<br><br><br>
+				</form>
+			</div>
+            	<div class="modal-footer">
+                	<button type="button" ng-click="editRelease()" class="btn btn-primary" data-dismiss="modal" ng-disabled="updateReleaseForm.$invalid">Submit</button>
+                	<button type="button" ng-click="close('Yes')" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+				
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+	<div >
+	 
+	 <table class="table table-striped">
+	  <thead>
+	  <tr>
+	  <td>Product Name</td>
+	  <td>Release Name</td>
+	  <td>Status</td>
+	  <td>Owner</td>
+	  <td>Start-Date</td>
+	  <td>End-Date</td>
+	  <td>Mnode received?</td>
+	  <td>Comments</td>
+	  <td>FRS</td>
+	  <td align="center">Action</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <form>
+	    <div class="form-group">
+	      <div class="input-group">
+	        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+	
+	        <input type="text" class="form-control" placeholder="Search" ng-model="searchRelease"/>
+	
+	      </div>      
+	    </div>
+	  </form>
+	  <tr ng-repeat="release in releases | filter:searchRelease">
+	    <td>{{ release.productName }}</td>
+	    <td>{{ release.name }}</td>
+	     <td>{{ release.status }}</td>
+	      <td>{{ release.owner }}</td>
+	     <td>{{ release.startDate  | date:'dd/MM/yyyy' }}</td>
+	     <td>{{ release.endDate  | date:'dd/MM/yyyy'}}</td>
+	      <td>{{ release.mnodeAvailable }}</td>
+	       <td>{{ release.comments }}</td>
+	       <td><a href="#">View FRS</a></td>
+	       <td> <button type="button" class="btn btn-sm btn-primary" ng-click="edit(release)"> Edit</button>
+	      </td>
+	       <td> <button type="button" class="btn btn-sm btn-primary" ng-click="deleteRelease(release)"> Delete</button></td>
+	  </tr>
+	   <p ng-show="!releases.length">No Data found</p>
+	    
+	  </tbody>
+	</table>
+	</div>
+	
+	  <div>
+	     <button type="button" class="btn  btn-primary"  ng-click="show()">Add Release</button>
+	
+	 </div> 
+        
+   
+	    
+	    
+	</div>
