@@ -1,12 +1,46 @@
 //module for landing page 
 var homeModule = angular.module('home');
 //Controller to show dashboard page
-homeModule.controller('dashBoardController', function($scope, dashBoardService, ModalService,$route) {
-	
+homeModule.controller('dashBoardController', function($scope, dashBoardService, ModalService,$route,moment) {
+		var vm = this;
 	  dashBoardService.getRelease().then(function(data) {
 		  $scope.releases = data;
+		  vm.releaseItems = data;
+		  
+		  $scope.calendarView = "month";
+		  $scope.todayDate = new Date();
+		  $scope.calendarTitle = "Release Plan";
+		  
+		  var releaseEvents=[] ;
+		  var numberOfReleases = vm.releaseItems.length;
+		 console.log("Number of releases"+numberOfReleases);
+		  for(cnt=0;cnt<numberOfReleases;cnt++) {
+			  var releaseItem = vm.releaseItems[cnt];
+			  console.log(releaseItem.endDate);
+			 // var titleEvent = "("+releaseItem.owner+")" + releaseItem.name;
+			  var releaseEvent = {
+	                  title: releaseItem.name, // The title of the event
+	                  type: 'important', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special
+	                  startsAt:  new Date(releaseItem.endDate), // A javascript date object for when the event starts
+	                  //endsAt: new Date(2014,8,26,15), // Optional - a javascript date object for when the event ends
+	                  editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable.
+	                  deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable
+	                  draggable: true, //Allow an event to be dragged and dropped
+	                  resizable: true, //Allow an event to be resizable
+	                  incrementsBadgeTotal: true, //If set to false then will not count towards the badge total amount on the month and year view
+	                  //recursOn: 'year', // If set the event will recur on the given period. Valid values are year or month
+	                  cssClass: 'a-css-class-name', //A CSS class (or more, just separate with spaces) that will be added to the event when it is displayed on each view. Useful for marking an event as selected / active etc
+	                  allDay: true // set to true to display the event as an all day event on the day view
+	                }
+			  releaseEvents[cnt] = releaseEvent;
+		  }
+		  
+		  $scope.events = releaseEvents;
+		  
+		  
 	 });
 	
+	 
 	  //broadcast method to refresh the list 
 	  $scope.$on("updateList",function(){
 		   dashBoardService.getRelease().then(function(data) {
@@ -298,7 +332,6 @@ homeModule.controller('dashBoardController', function($scope, dashBoardService, 
 	    
 	    
 	});
- 
  
  
  // configure routes here

@@ -1,4 +1,5 @@
- var homeModule = angular.module('home', ['ngRoute','angularModalService','ngAnimate', 'ui.bootstrap']);
+ var homeModule = angular.module('home', ['ngRoute','angularModalService','ngAnimate', 'ui.bootstrap','mwl.calendar']);
+ 
 
  // service that provides rest calls for get/add/update/delete release
 homeModule.factory('dashBoardService',function($http){
