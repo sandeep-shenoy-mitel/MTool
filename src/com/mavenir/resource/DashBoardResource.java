@@ -1,14 +1,15 @@
 package com.mavenir.resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,6 +23,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import com.mavenir.entity.Documents;
 import com.mavenir.entity.Release;
 
 
@@ -185,8 +187,50 @@ public class DashBoardResource
         tx.commit();
 		Response response = Response.ok(). header("Access-Control-Allow-Origin", "*").
    	         header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization").header("Accept", "application/json;text/plain; * / *").build();
+		
+		Utility.deleteDirectory(newRelease.getProductName(), newRelease.getName());
+		
         return response;
 	}
+	
+	
+	   @GET
+		@Path("/documents/list/{product},{release}")
+	    @Produces({ MediaType.APPLICATION_JSON })
+		public Response getDocumentList(@PathParam("product") String productName,@PathParam("release") String releaseName) {
+	    	
+		   	System.out.println("inside getDocumentList method, product Name : "+productName+" release Name : "+releaseName);
+		   	List<Documents> docLst = new ArrayList<Documents>();
+		   	
+		   	String myDirectoryPath = Utility.getDirectoryPath(productName, releaseName);
+		   	System.out.println("myDirectoryPath : "+myDirectoryPath);
+		   	
+		   	File dir = new File(myDirectoryPath);
+		    File[] directoryListing = dir.listFiles();
+		    if (directoryListing != null) {
+		      for (File child : directoryListing) {
+		    	  Documents doc = new Documents();
+		    	  doc.setProductName(productName);
+		    	  doc.setName(releaseName);
+		    	  doc.setDocumentName(child.getName());
+		    	  doc.setPath(child.getAbsolutePath());
+		    	  docLst.add(doc);
+		      }
+		    } else {
+		      System.out.println("No files found under the directory : "+myDirectoryPath);
+		    }
+	    	 
+	    	 
+	     Response response = Response.ok(docLst,MediaType.APPLICATION_JSON).
+	    			 header("Access-Control-Allow-Origin", "*").
+	    	         header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").
+	    	          build();
+	         return response;
+
+	        
+	         
+	         
+		}
     
     public static void main(String args[]){
     	

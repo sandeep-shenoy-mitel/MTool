@@ -1,3 +1,56 @@
+<script type="text/ng-template" id="firstDialogId">
+<div class="container-fluid">
+ 
+ <table class="table table-striped">
+  <thead>
+  <tr>
+  <td>Release Name</td>
+  <td>File Name</td>
+  <td>DownLoad</td>
+  
+  </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="doc in docs ">
+    <td>{{ doc.productName }}</td>
+    <td>{{doc.documentName}}</td>
+       <td>
+                <a ng-href={{url}} ng-click="download(doc.productName,doc.name,doc.documentName)">
+                        Download
+                </a>
+       </td>
+  </tr>
+  </tbody>
+</table>
+</div>
+ </script>
+
+<script type="text/ng-template" id="upLoadId">
+ <div>
+        <form name="form">
+<fieldset>
+             Single file 
+   {{product }}
+   {{release }}
+release
+  <div>Select
+        <input type="file" ngf-select ng-model="frsFile" name="file"    
+             accept="*" ngf-max-size="20MB" required
+             ngf-model-invalid="errorFile">
+</div>
+   <button type="submit" ng-click="submit(frsFile,product,release)">submit</button>
+    <span class="progress" ng-show="picFile.progress >= 0">
+        <div style="width:{{picFile.progress}}%" 
+            ng-bind="picFile.progress + '%'"></div>
+      </span>
+      <span ng-show="picFile.result">Upload Successful</span>
+      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    </fieldset>
+</form>
+
+</div>
+ </script>
+ 
 <div class="container-fluid">
 	<div >
 	 
@@ -13,6 +66,7 @@
 	  <td>Mnode received?</td>
 	  <td>Comments</td>
 	  <td>FRS</td>
+	  <td>Upload</td>
 	  <td align="center">Action</td>
 	  </tr>
 	  </thead>
@@ -36,10 +90,25 @@
 	     <td>{{ release.endDate  | date:'dd/MM/yyyy'}}</td>
 	      <td>{{ release.mnodeAvailable }}</td>
 	       <td>{{ release.comments }}</td>
-	       <td><a href="#">View FRS</a></td>
+	       <td>
+                <a  ng-click="clickToOpen(release.productName,release.name)">
+                        View FRS
+                   
+                </a>
+       	</td>
+       		       <td>
+       
+                <a  ng-click="clickToUpload(release.productName,release.name)">
+                       upload FRS
+                   
+                </a>
+                
+       		</td>
 	       <td> <button type="button" class="btn btn-sm btn-primary" ng-click="edit(release)"> Edit</button>
 	      </td>
 	       <td> <button type="button" class="btn btn-sm btn-primary" ng-click="deleteRelease(release)"> Delete</button></td>
+	      
+
 	  </tr>
 	   <p ng-show="!releases.length">No Data found</p>
 	    

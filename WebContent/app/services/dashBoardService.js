@@ -1,8 +1,4 @@
- var homeModule = angular.module('home', ['ngRoute','angularModalService','ngAnimate', 'ui.bootstrap','mwl.calendar']);
- 
-
- // service that provides rest calls for get/add/update/delete release
-homeModule.factory('dashBoardService',function($http){
+angular.module('home').factory('dashBoardService',function($http){
 	var factory = {}; 
 	
 	//retrieve list of releases
@@ -91,6 +87,22 @@ homeModule.factory('dashBoardService',function($http){
 		return data;
 	}
 		
+	
+	factory.getDocList = function(product,release) {
+		
+
+		var releaseInfo =  $http.get("http://10.3.3.44:8080/mTool/rest/dashboardService/documents/list/"+product+","+release)
+	    .then(function(response) {
+	    	console.log("In Service");
+	    	releaseInfo = response.data;
+	    	return response.data;
+	    	
+	    });
+	 console.log(releaseInfo);
+	 return releaseInfo;
+	}
+	
+	
 	return factory;
 	
 });

@@ -42,4 +42,29 @@
    </context-param>
   
      
+     
+     <servlet>
+        <servlet-name>file_upload</servlet-name>
+        <servlet-class>com.mavenir.resource.FileUpload</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>file_upload</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+    
+    
+  
+  	<servlet>  
+    <servlet-name>DownloadServlet</servlet-name>  
+    <servlet-class>com.mavenir.resource.DownloadServlet</servlet-class>  
+    </servlet>  
+  
+    <servlet-mapping>  
+    <servlet-name>DownloadServlet</servlet-name>  
+        <url-pattern>/download</url-pattern>  
+    </servlet-mapping>  
+    
+    
+      
+     
 </web-app>
